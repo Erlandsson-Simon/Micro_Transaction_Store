@@ -23,8 +23,12 @@ for (int i = 0; i < productPriceString.Length; i++)
 int productChoosen = 0;
 int productCount = 0;
 
-System.Console.WriteLine("Welcome! Would you like to buy something from the store?");
-System.Console.WriteLine("Y or N");
+Console.WriteLine("Welcome! If you like to buy something from the store?");
+Console.Write("Type ");
+Console.ForegroundColor = ConsoleColor.Green;
+Console.Write("Y");
+Console.ForegroundColor = ConsoleColor.White;
+Console.WriteLine("");
 
 doesCustomerBuy = Console.ReadLine();
 
@@ -42,32 +46,49 @@ while (buying)
         string item = products[i];
 
         Console.WriteLine($"{i + 1}. {item} {productPrice[i]}:-");
-
     }
 
     productChoosen = validAnswer.numberTest();
 
     Console.WriteLine($"How many {products[productChoosen - 1]}s whould you like to buy?");
-
     doesCustomerHaveEnought = false;
 
     while (doesCustomerHaveEnought == false)
     {
         productCount = validAnswer.numberTest();
 
-        if (productCount * productPrice[productChoosen - 1] < 100)
+        if (productCount * productPrice[productChoosen - 1] < money)
         {
             doesCustomerHaveEnought = true;
 
             money = money - productCount * productPrice[productChoosen - 1];
-        } else 
+        }
+        else
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("You dont have enougt.");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine($"The price of what your trying to buy is {productCount * productPrice[productChoosen - 1]}");
+            Console.WriteLine($"And you only have {money}");
+            Console.WriteLine($"How many {products[productChoosen-1]} would you like to buy?");
+        }
+
     }
 
     Console.WriteLine($"Congratulations you now have {money}:- left.");
-    Console.WriteLine($"inv");
 
-    Console.WriteLine("Would you like to buy something more?");
-    System.Console.WriteLine("Y or N");
+    Console.WriteLine("If you like to buy something more?");
+    Console.Write("Type ");
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.Write("Y");
+    Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("");
+
+    Console.WriteLine("And if you would like to leave.");
+    Console.Write("Type ");
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.Write("N");
+    Console.ForegroundColor = ConsoleColor.White;
 
     doesCustomerBuyMore = Console.ReadLine();
 
