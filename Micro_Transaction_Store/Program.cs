@@ -10,6 +10,8 @@ string doesCustomerBuyMore;
 
 int money = 100;
 
+bool doesProductExist;
+
 string[] products = File.ReadAllLines(@"shopingList");
 string[] productPriceString = File.ReadAllLines(@"productPrices");
 int[] productPrice = new int[productPriceString.Length];
@@ -48,7 +50,22 @@ while (buying)
         Console.WriteLine($"{i + 1}. {item} {productPrice[i]}:-");
     }
 
-    productChoosen = validAnswer.numberTest();
+    doesProductExist = false;
+
+    while (doesProductExist == false)
+    {
+        productChoosen = validAnswer.numberTest();
+
+        if (productChoosen > products.Length)
+        {
+            Console.WriteLine("That product doesn't exist, try again.");
+        }
+        else
+        {
+            doesProductExist = true;
+        }
+    }
+
 
     Console.WriteLine($"How many {products[productChoosen - 1]}s whould you like to buy?");
     doesCustomerHaveEnought = false;
@@ -57,7 +74,7 @@ while (buying)
     {
         productCount = validAnswer.numberTest();
 
-        if (productCount * productPrice[productChoosen - 1] < money)
+        if (productCount * productPrice[productChoosen - 1] <= money)
         {
             doesCustomerHaveEnought = true;
 
@@ -70,7 +87,7 @@ while (buying)
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine($"The price of what your trying to buy is {productCount * productPrice[productChoosen - 1]}");
             Console.WriteLine($"And you only have {money}");
-            Console.WriteLine($"How many {products[productChoosen-1]} would you like to buy?");
+            Console.WriteLine($"How many {products[productChoosen - 1]} would you like to buy?");
         }
 
     }
@@ -89,12 +106,13 @@ while (buying)
     Console.ForegroundColor = ConsoleColor.Red;
     Console.Write("N");
     Console.ForegroundColor = ConsoleColor.White;
+    Console.WriteLine("");
 
     doesCustomerBuyMore = Console.ReadLine();
 
     if (doesCustomerBuyMore.ToLower() != "y")
     {
         buying = false;
-    }
+    } 
 }
 Console.ReadLine();
